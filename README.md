@@ -1,6 +1,6 @@
 # neuralnet-study  
 
-simple_exor.py (Python2,Python3) 
+simple_exor.py (Python2,Python3)   
 EXORの分類問題を解くFeedForward Neural Networkの実装です。  
 (gradient_checking付き)  
 
