@@ -32,8 +32,11 @@ def add_bias(matrix):
     Ones=np.ones((L,1),dtype=np.float32)
     return np.c_[Ones,matrix]
 
-def forward_one(W,X):
-    return sigmoid(np.dot(add_bias(X),W))
+def forward_one(W,X,linear=False):
+    if linear:
+        return np.dot(add_bias(X),W)
+    else:
+        return sigmoid(np.dot(add_bias(X),W))
 
 #---Objective function(Cost function)---
 def square_error(y,t):
@@ -48,20 +51,20 @@ lr = 0.1    #learning rate
 N = float(len(Y))  #the number of data
 
 print("start learning...")
-for i in range(10000):
+for i in range(30000):
     h = forward_one(W1,X)
     y = forward_one(W2,h)
     objective = 0.5*square_error(y,Y)/N
     err = y-Y                                           #error of output layer
     err1=np.dot(err,W2.T)                               #error of hidden layer
-    delta_w2=np.dot(add_bias(h).T,err)/N                #W2 gradient
+    delta_w2=np.dot(add_bias(h).T,y*(1-y)*err)/N        #W2 gradient MSE:y*(1-y)*err, cross entropy: err 
     delta_w1=np.dot(add_bias(X).T,h*(1-h)*err1[:,1:])/N #W1 gradient
     W1 -= lr*delta_w1                                   #W1 update
     W2 -= lr*delta_w2                                   #W2 update
 
     if i%1000 == 0:
         print("gradient checking")
-        diff = 10e-5 #small perturbation change
+        diff = 10e-4 #small perturbation change
         #check W2 gradient
         pW2=copy.deepcopy(W2)
         nW2=copy.deepcopy(W2)
