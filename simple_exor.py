@@ -4,7 +4,7 @@ import copy
 
 #np.array(float32) function
 def farray(matrix):
-    return np.array(matrix,np.float32)
+    return np.array(matrix,dtype=np.float32)
 
 X=farray([[0,0],
           [0,1],
