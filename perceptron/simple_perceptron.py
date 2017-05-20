@@ -31,7 +31,7 @@ def activation_func(x): #step function
 
 def perceptron_criteria(w):
     D = 0
-    Y = T*forward(w,X)
+    Y = -T*forward(w,X)
     for y in Y:
         if y[0] > 0:
             D += y[0] # add loss only if miss classification happens
@@ -63,6 +63,7 @@ def forward(W,X):
 
 N = float(len(T))  #the number of data
 
+print("leaning rate:",lr)
 print("start learning...")
 for i in range(3000):
     #1 sample selection
@@ -85,3 +86,6 @@ for i in range(3000):
         print("iter:{}, D:{:1.2f}, w:{}, w_norm:{:1.2f}, normalized w:{}".format(iteration,D,W.flatten(),W_norm,normalized_W.flatten()))
 
 print("finish")
+with open("result.txt","a") as f:
+    print("learning rate:{}".format(lr),file=f)
+    print("iter:{}, D:{:1.2f}, w:{}, w_norm:{:1.2f}, normalized w:{}".format(iteration,D,W.flatten(),W_norm,normalized_W.flatten()),file=f)
